@@ -5,8 +5,6 @@ using System.Threading.Tasks;
 
 namespace kata_09_checkout
 {
-
-
     internal class Offer
     {
         public int Threashold { get; set; }
@@ -39,17 +37,23 @@ namespace kata_09_checkout
 
         public int ItemsCount()
         {
-            throw new NotImplementedException();
+            return _basket.Count;
         }
 
         public void Scan(string item)
         {
-            throw new NotImplementedException();
+            _basket.Add(item);
         }
 
         public decimal TotalCost()
         {
-            throw new NotImplementedException();
+            decimal basketTotal = 0m;
+            foreach (var item in _basket)
+            {
+                basketTotal += _prices[item];
+            }
+
+            return basketTotal;
         }
     }
 
