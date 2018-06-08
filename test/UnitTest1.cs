@@ -9,10 +9,11 @@ namespace kata_09_checkout.test
         private Checkout _ch = new Checkout();
 
         [Fact]
-        public void It_Counts_One()
+        public void It_Scans_And_Totals_Single_Item()
         {
             this.Given(x => x.ItemIsAddedToBasket())
                 .Then(x => x.ItReturnsExpetedCount(1))
+                .And(x => x.BasketTotalIsCorrect(50))
                 .BDDfy();
         }
 
@@ -24,6 +25,11 @@ namespace kata_09_checkout.test
         private async Task ItReturnsExpetedCount(int count)
         {
             Assert.True(_ch.ItemsCount() == count);
+        }
+
+        private async Task BasketTotalIsCorrect(decimal cost)
+        {
+            Assert.True(_ch.TotalCost() == cost);
         }
     }
 }
