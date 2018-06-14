@@ -9,20 +9,45 @@ namespace kata_09_checkout.test
         private Checkout _ch = new Checkout();
 
         [Fact]
-        public void It_Scans_And_Totals_Single_Item()
+        public void It_Scans_And_Totals_Single_Item_Correctly()
         {
-            this.Given(x => x.ItemIsAddedToBasket())
-                .Then(x => x.ItReturnsExpetedCount(1))
+            this.Given(x => x.ItemAIsAddedToTheBasket())
+                .Then(x => x.BasketReturnsExpetedCount(1))
                 .And(x => x.BasketTotalIsCorrect(50))
                 .BDDfy();
         }
 
-        private async Task ItemIsAddedToBasket()
+        [Fact]
+        public void It_Scans_And_Totals_TwoSame_Items_Correctly()
+        {
+            this.Given(x => x.ItemAIsAddedToTheBasket())
+                .Given(x => x.ItemAIsAddedToTheBasket())
+                .Then(x => x.BasketReturnsExpetedCount(2))
+                .And(x => x.BasketTotalIsCorrect(100))
+                .BDDfy();
+        }
+
+        [Fact]
+        public void It_Scans_And_Totals_TwoDifferent_Items_Correctly()
+        {
+            this.Given(x => x.ItemAIsAddedToTheBasket())
+                .Given(x => x.ItemBIsAddedToTheBasket())
+                .Then(x => x.BasketReturnsExpetedCount(2))
+                .And(x => x.BasketTotalIsCorrect(80))
+                .BDDfy();
+        }
+
+        private async Task ItemAIsAddedToTheBasket()
         {
             _ch.Scan("A");
         }
 
-        private async Task ItReturnsExpetedCount(int count)
+        private async Task ItemBIsAddedToTheBasket()
+        {
+            _ch.Scan("B");
+        }
+
+        private async Task BasketReturnsExpetedCount(int count)
         {
             Assert.True(_ch.ItemsCount() == count);
         }
