@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 
@@ -51,6 +52,16 @@ namespace kata_09_checkout
             foreach (var item in _basket)
             {
                 basketTotal += _prices[item];
+            }
+
+            foreach (var offer in _offers)
+            {
+                var alligableItems = _basket.Where(x => x == offer.Key);
+                if (alligableItems.Count() >= offer.Value.Threashold)
+                {
+                    basketTotal -= offer.Value.Threashold * _prices[offer.Key];
+                    basketTotal += offer.Value.Cost;
+                }
             }
 
             return basketTotal;
