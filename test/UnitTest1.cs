@@ -37,6 +37,17 @@ namespace kata_09_checkout.test
                 .BDDfy();
         }
 
+        [Fact]
+        public void It_Applies_Offer()
+        {
+            this.Given(x => x.ItemAIsAddedToTheBasket())
+                .Given(x => x.ItemAIsAddedToTheBasket())
+                .Given(x => x.ItemAIsAddedToTheBasket())
+                .Then(x => x.BasketReturnsExpetedCount(3))
+                .And(x => x.BasketTotalIsCorrect(130))
+                .BDDfy();
+        }
+
         private async Task ItemAIsAddedToTheBasket()
         {
             _ch.Scan("A");
